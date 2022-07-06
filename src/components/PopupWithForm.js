@@ -9,9 +9,10 @@ function PopupWithForm(props) {
           {props.children};
           <button id={`${props.name}-submit-button"`} className="popup-form__submit-button" type="submit">{props.buttonText}</button>
         </form>
-        <button className="popup__close-button" type="button"></button>
+        <button className="popup__close-button" onClick={props.onClose} type="button"></button>
       </div>
     </div>
   )
 }
+
 export default PopupWithForm;
