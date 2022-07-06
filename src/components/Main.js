@@ -1,8 +1,26 @@
 import React from "react";
+import Api from "../utils/Api";
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      userName: '',
+      userDescription: '',
+      userAvatar: '',
+    }
+  }
+
+  componentDidMount() {
+    Api.getUserInfoFromServer()
+      .then(res =>
+        this.setState({
+          userName: res.name,
+          userDescription: res.about,
+          userAvatar: res.avatar,
+        })
+      );
   }
 
   render() {
@@ -10,13 +28,13 @@ class Main extends React.Component {
       <main className="content">
         <section className="profile">
           <div className="profile__list">
-            <a onClick={this.props.onEditAvatar} className="profile__avatar"></a>
+            <a onClick={this.props.onEditAvatar} className="profile__avatar" style={{ backgroundImage: `url(${this.state.userAvatar})` }} ></a>
             <div className="profile__info">
               <div className="profile__title-info">
-                <h1 className="profile__title">Жак-Ив Кусто</h1>
+                <h1 className="profile__title">{this.state.userName}</h1>
                 <button onClick={this.props.onEditProfile} className="profile__edit-button" type="button"></button>
               </div>
-              <h2 className="profile__subtitle">Исследователь океана</h2>
+              <h2 className="profile__subtitle">{this.state.userDescription}</h2>
             </div>
           </div>
           <button onClick={this.props.onAddPlace} className="profile__add-photo-button" type="button"></button>
