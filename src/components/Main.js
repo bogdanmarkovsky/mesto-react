@@ -4,14 +4,13 @@ import Api from "../utils/Api";
 class Main extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       userName: '',
       userDescription: '',
       userAvatar: '',
+      cards: [],
     }
   }
-
   componentDidMount() {
     Api.getUserInfoFromServer()
       .then(res =>
@@ -21,8 +20,13 @@ class Main extends React.Component {
           userAvatar: res.avatar,
         })
       );
+    Api.getCardsFromServer()
+      .then(res =>
+        this.setState({
+          cards: res,
+        })
+      );
   }
-
   render() {
     return (
       <main className="content">
@@ -40,9 +44,26 @@ class Main extends React.Component {
           <button onClick={this.props.onAddPlace} className="profile__add-photo-button" type="button"></button>
         </section>
         <section className="photo-grid">
-          <ul className="photo-grid__cards"></ul>
+          <ul className="photo-grid__cards">
+            {this.state.cards.map((item) => {
+              return (
+                <li className="photo-grid__card">
+                  <img className="photo-grid__card-image" src={item.link} />
+                  <button className="photo-grid__remove-button"></button>
+                  <div className="photo-grid__card-content">
+                    <h4 className="photo-grid__card-text">{item.name}</h4>
+                    <div className="photo-grid__like-container">
+                      <button className="photo-grid__like-button" type="button"></button>
+                      <div className="photo-grid__like-counter">{item.likes.length}</div>
+                    </div>
+                  </div>
+                </li>
+              )
+            })
+            }
+          </ul>
         </section>
-      </main>
+      </main >
     )
   }
 }
