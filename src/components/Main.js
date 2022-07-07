@@ -1,9 +1,11 @@
 import React from "react";
 import Api from "../utils/Api";
+import Card from "./Card";
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       userName: '',
       userDescription: '',
@@ -11,6 +13,7 @@ class Main extends React.Component {
       cards: [],
     }
   }
+
   componentDidMount() {
     Api.getUserInfoFromServer()
       .then(res =>
@@ -27,6 +30,7 @@ class Main extends React.Component {
         })
       );
   }
+
   render() {
     return (
       <main className="content">
@@ -45,21 +49,9 @@ class Main extends React.Component {
         </section>
         <section className="photo-grid">
           <ul className="photo-grid__cards">
-            {this.state.cards.map((item) => {
-              return (
-                <li className="photo-grid__card">
-                  <img className="photo-grid__card-image" src={item.link} />
-                  <button className="photo-grid__remove-button"></button>
-                  <div className="photo-grid__card-content">
-                    <h4 className="photo-grid__card-text">{item.name}</h4>
-                    <div className="photo-grid__like-container">
-                      <button className="photo-grid__like-button" type="button"></button>
-                      <div className="photo-grid__like-counter">{item.likes.length}</div>
-                    </div>
-                  </div>
-                </li>
-              )
-            })
+            {this.state.cards.map((item) => (
+              <Card key={item._id} onCardClick={this.props.onCardClick} card={item}></Card>
+            ))
             }
           </ul>
         </section>
