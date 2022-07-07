@@ -36,21 +36,33 @@ class Main extends React.Component {
       <main className="content">
         <section className="profile">
           <div className="profile__list">
-            <a onClick={this.props.onEditAvatar} className="profile__avatar" style={{ backgroundImage: `url(${this.state.userAvatar})` }} ></a>
+            <a
+              onClick={this.props.onEditAvatar}
+              className="profile__avatar"
+              style={{ backgroundImage: `url(${this.state.userAvatar})` }} />
             <div className="profile__info">
               <div className="profile__title-info">
                 <h1 className="profile__title">{this.state.userName}</h1>
-                <button onClick={this.props.onEditProfile} className="profile__edit-button" type="button"></button>
+                <button
+                  onClick={this.props.onEditProfile}
+                  className="profile__edit-button"
+                  type="button" />
               </div>
               <h2 className="profile__subtitle">{this.state.userDescription}</h2>
             </div>
           </div>
-          <button onClick={this.props.onAddPlace} className="profile__add-photo-button" type="button"></button>
+          <button
+            onClick={this.props.onAddPlace}
+            className="profile__add-photo-button"
+            type="button" />
         </section>
         <section className="photo-grid">
           <ul className="photo-grid__cards">
             {this.state.cards.map((item) => (
-              <Card key={item._id} onCardClick={this.props.onCardClick} card={item}></Card>
+              <Card
+                key={item._id}
+                onCardClick={this.props.onCardClick}
+                card={item} />
             ))
             }
           </ul>
